@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Checkout - Frutos Secos</title>
+
+    <link rel="stylesheet" href="checkout.css">
+
+</head>
+
+<body>
+
+    <nav>
+
+        <div class="logo">
+
+            FRUTOS SECOS
+
+        </div>
+
+        <ul>
+
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="cart.html">🛒 Cart</a></li>
+
+        </ul>
+
+    </nav>
+
+    <div class="checkout-container">
+
+        <div class="customer-details">
+
+            <h1>Delivery Details</h1>
+
+            <input type="text" placeholder="Full Name">
+
+            <input type="email" placeholder="Email Address">
+
+            <input type="tel" placeholder="Phone Number">
+
+            <textarea placeholder="Complete Address"></textarea>
+
+            <input type="text" placeholder="City">
+
+            <input type="text" placeholder="State">
+
+            <input type="text" placeholder="Pincode">
+
+        </div>
+
+        <div class="order-summary">
+
+            <h2>Order Summary</h2>
+
+            <div id="checkout-items"></div>
+
+            <hr>
+
+            <h3>
+
+                Total
+
+                <span id="checkout-total">₹0</span>
+
+            </h3>
+
+            <button id="place-order">
+
+                Proceed to Payment
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <script src="checkout.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Shopping Cart - Frutos Secos</title>
+
+    <link rel="stylesheet" href="cart.css">
+
+</head>
+
+<body>
+
+    <nav>
+
+        <div class="logo">
+            FRUTOS SECOS
+        </div>
+
+        <ul>
+
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="cart.html">🛒 Cart</a></li>
+
+        </ul>
+
+    </nav>
+
+    <h1 class="cart-title">Shopping Cart</h1>
+
+    <div class="cart-layout">
+
+        <div id="cart-items">
+
+        </div>
+
+        <div class="summary">
+
+            <h2>Order Summary</h2>
+
+            <hr>
+
+            <p>
+
+                Subtotal
+
+                <span id="subtotal">₹0</span>
+
+            </p>
+
+            <p>
+
+                Shipping
+
+                <span>FREE</span>
+
+            </p>
+
+            <hr>
+
+            <h3>
+
+                Total
+
+                <span id="total">₹0</span>
+
+            </h3>
+
+            <button class="continue-btn"
+            onclick="window.location.href='products.html'">
+
+                Continue Shopping
+
+            </button>
+
+            <button class="checkout-btn"
+onclick="window.location.href='checkout.html'">
+
+    Proceed To Checkout
+
+</button>
+
+        </div>
+
+    </div>
+
+    <script src="cart.js"></script>
+
+</body>
+
+</html>

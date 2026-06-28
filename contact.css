@@ -1,0 +1,142 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background-color:#2B1D16;
+
+    font-family:Georgia, serif;
+
+    color:#E8D8B5;
+
+}
+
+.contact-container{
+
+    width:1000px;
+
+    margin:auto;
+
+    text-align:center;
+
+    padding-top:120px;
+
+}
+
+.contact-container h1{
+
+    font-size:100px;
+
+    letter-spacing:5px;
+
+}
+
+.contact-container h2{
+
+    color:#C8A27A;
+
+    margin-top:20px;
+
+    font-size:40px;
+
+    font-style:italic;
+
+}
+
+.contact-info{
+
+    margin-top:80px;
+
+}
+
+.contact-info h3{
+
+    color:#C8A27A;
+
+    font-size:32px;
+
+    margin-top:40px;
+
+}
+
+.contact-info p{
+
+    margin-top:15px;
+
+    font-size:24px;
+
+    line-height:1.8;
+
+}
+nav{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    background:#C8A27A;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:20px 80px;
+
+    z-index:1000;
+
+}
+
+.logo{
+
+    color:#2B1D16;
+
+    font-size:32px;
+
+    font-weight:bold;
+
+    letter-spacing:3px;
+
+}
+
+nav ul{
+
+    display:flex;
+
+    list-style:none;
+
+}
+
+nav ul li{
+
+    margin-left:40px;
+
+}
+
+nav ul li a{
+
+    text-decoration:none;
+
+    color:#2B1D16;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    transition:0.3s;
+
+}
+
+nav ul li a:hover{
+
+    color:white;a
+
+}

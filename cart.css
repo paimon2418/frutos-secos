@@ -1,0 +1,155 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#2B1D16;
+    color:#E8D8B5;
+    font-family:Georgia, serif;
+    padding-top:120px;
+}
+
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:90px;
+    background:#C8A27A;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 80px;
+    z-index:1000;
+}
+
+.logo{
+    color:#2B1D16;
+    font-size:32px;
+    font-weight:bold;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+}
+
+nav ul li{
+    margin-left:40px;
+}
+
+nav ul li a{
+    text-decoration:none;
+    color:#2B1D16;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.cart-title{
+    text-align:center;
+    font-size:60px;
+    margin-bottom:50px;
+}
+
+.cart-layout{
+    width:90%;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:40px;
+}
+
+#cart-items{
+    flex:2;
+}
+
+.cart-card{
+    display:flex;
+    align-items:center;
+    gap:30px;
+    background:#3A281F;
+    border:2px solid #C8A27A;
+    border-radius:20px;
+    padding:25px;
+    margin-bottom:30px;
+}
+
+.cart-image{
+    width:160px;
+    filter:drop-shadow(0 20px 20px rgba(0,0,0,0.5));
+}
+
+.cart-info{
+    flex:1;
+}
+
+.cart-info h2{
+    font-size:35px;
+    margin-bottom:10px;
+}
+
+.cart-info p{
+    font-size:22px;
+    margin:15px 0;
+}
+
+.cart-info button{
+    padding:10px 20px;
+    border:none;
+    border-radius:25px;
+    background:#C8A27A;
+    color:#2B1D16;
+    cursor:pointer;
+    font-size:18px;
+    margin:5px;
+}
+
+.summary{
+    flex:1;
+    background:#3A281F;
+    border:2px solid #C8A27A;
+    border-radius:20px;
+    padding:30px;
+    position:sticky;
+    top:120px;
+}
+
+.summary h2{
+    margin-bottom:20px;
+}
+
+.summary p,
+.summary h3{
+    display:flex;
+    justify-content:space-between;
+    margin:20px 0;
+    font-size:22px;
+}
+
+.summary hr{
+    border:1px solid #C8A27A;
+}
+
+.continue-btn,
+.checkout-btn{
+    width:100%;
+    padding:18px;
+    border:none;
+    border-radius:35px;
+    font-size:18px;
+    cursor:pointer;
+    margin-top:20px;
+}
+
+.continue-btn{
+    background:#C8A27A;
+    color:#2B1D16;
+}
+
+.checkout-btn{
+    background:#E8D8B5;
+    color:#2B1D16;
+}
