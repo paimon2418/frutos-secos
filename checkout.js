@@ -1,37 +1,42 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-let checkoutItems = document.getElementById("checkout-items");
+const checkoutItems = document.getElementById("checkout-items");
+const subtotal = document.getElementById("subtotal");
+const total = document.getElementById("checkout-total");
 
-let total = 0;
+let grandTotal = 0;
 
-cart.forEach(item=>{
+if(cart.length === 0){
 
-    total += item.price * item.quantity;
+    checkoutItems.innerHTML = "<p>Your cart is empty.</p>";
 
-    checkoutItems.innerHTML += `
+}else{
 
-    <p>
+    cart.forEach(item => {
 
-        ${item.name} × ${item.quantity}
+        grandTotal += item.price * item.quantity;
 
-        <span style="float:right;">₹${item.price * item.quantity}</span>
+        checkoutItems.innerHTML += `
 
-    </p>
+        <div class="checkout-item">
 
-    <br>
+            <span>${item.name} × ${item.quantity}</span>
 
-    `;
+            <span>₹${item.price * item.quantity}</span>
 
-});
+        </div>
 
-document.getElementById("checkout-total").innerHTML="₹"+total;
+        `;
 
-document.getElementById("place-order").onclick=function(){
+    });
 
-    alert("Order Placed Successfully!");
+}
 
-    localStorage.removeItem("cart");
+subtotal.innerHTML = "₹" + grandTotal;
+total.innerHTML = "₹" + grandTotal;
 
-  window.location.href="payment.html";";
+document.getElementById("place-order").onclick = function(){
+
+    window.location.href = "payment.html";
 
 };

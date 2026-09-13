@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-    <title>Checkout - Frutos Secos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | Frutos Secos</title>
 
     <link rel="stylesheet" href="checkout.css">
 
@@ -13,11 +16,7 @@
 
     <nav>
 
-        <div class="logo">
-
-            FRUTOS SECOS
-
-        </div>
+        <div class="logo">FRUTOS SECOS</div>
 
         <ul>
 
@@ -31,7 +30,7 @@
 
     </nav>
 
-    <div class="checkout-container">
+    <section class="checkout">
 
         <div class="customer-details">
 
@@ -45,11 +44,23 @@
 
             <textarea placeholder="Complete Address"></textarea>
 
-            <input type="text" placeholder="City">
+            <div class="address-row">
 
-            <input type="text" placeholder="State">
+                <input type="text" placeholder="City">
 
-            <input type="text" placeholder="Pincode">
+                <input type="text" placeholder="State">
+
+                <input type="text" placeholder="Pincode">
+
+            </div>
+
+            <label class="checkbox">
+
+                <input type="checkbox">
+
+                Save this address for future orders
+
+            </label>
 
         </div>
 
@@ -61,23 +72,65 @@
 
             <hr>
 
-            <h3>
+            <div class="price-row">
 
-                Total
+                <span>Subtotal</span>
+
+                <span id="subtotal">₹0</span>
+
+            </div>
+
+            <div class="price-row">
+
+                <span>Shipping</span>
+
+                <span>FREE</span>
+
+            </div>
+
+            <div class="price-row">
+
+                <span>GST</span>
+
+                <span>Included</span>
+
+            </div>
+
+            <hr>
+
+            <div class="price-row total">
+
+                <span>Total</span>
 
                 <span id="checkout-total">₹0</span>
 
-            </h3>
+            </div>
+
+            <div class="info-box">
+
+                <h3>🚚 Estimated Delivery</h3>
+
+                <p>2–4 Business Days</p>
+
+            </div>
+
+            <div class="info-box">
+
+                <h3>🔒 Secure Checkout</h3>
+
+                <p>SSL Encrypted Payments</p>
+
+            </div>
 
             <button id="place-order">
 
-                Proceed to Payment
+                Continue to Payment →
 
             </button>
 
         </div>
 
-    </div>
+    </section>
 
     <script src="checkout.js"></script>
 

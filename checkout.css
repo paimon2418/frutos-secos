@@ -47,18 +47,36 @@ nav ul li a{
 }
 
 .checkout-container{
-    width:90%;
-    margin:auto;
-    display:flex;
-    justify-content:space-between;
-    gap:50px;
+
+   .checkout-container{
+
+    width:95%;
+
+    margin:40px auto;
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:30px;
+
+    align-items:start;
+
+}
+
 }
 
 .customer-details{
-    flex:2;
+  
+
+    flex:3;
+
     background:#3A281F;
+
     padding:40px;
+
     border-radius:20px;
+
 }
 
 .customer-details h1{
@@ -67,7 +85,7 @@ nav ul li a{
 
 .customer-details input,
 .customer-details textarea{
-    width:100%;
+    width:60%;
     margin-bottom:20px;
     padding:18px;
     border:none;
@@ -81,14 +99,20 @@ nav ul li a{
 }
 
 .order-summary{
-    flex:1;
-    background:#3A281F;
-    padding:35px;
-    border-radius:20px;
-    position:sticky;
-    top:120px;
-}
 
+    background:#3A281F;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    position:sticky;
+
+    top:120px;
+
+    width:100%;
+
+}
 .order-summary h2{
     margin-bottom:20px;
 }
@@ -114,4 +138,62 @@ nav ul li a{
     color:#2B1D16;
     font-size:20px;
     cursor:pointer;
+}
+.delivery-box,
+.secure-box{
+
+    margin-top:25px;
+
+    background:#2B1D16;
+
+    padding:20px;
+
+    border-radius:15px;
+
+}
+
+.delivery-box h3,
+.secure-box h3{
+
+    color:#C8A27A;
+
+    margin-bottom:10px;
+
+}
+
+.delivery-box p,
+.secure-box p{
+
+    font-size:18px;
+
+}
+
+#place-order{
+
+    width:100%;
+
+    padding:18px;
+
+    margin-top:30px;
+
+    background:#C8A27A;
+
+    color:#2B1D16;
+
+    border:none;
+
+    border-radius:35px;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+#place-order:hover{
+
+    transform:scale(1.03);
+
 }
