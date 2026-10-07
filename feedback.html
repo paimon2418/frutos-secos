@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1F1A14">
+  <title>Share Your Feedback — Frutos Secos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #9D8368;
+      --paper-light: #F1EAD9;
+      --ink: #1F1A14;
+      --ink-soft: #2E2419;
+      --walnut: #4A3524;
+      --line: rgba(31, 26, 20, 0.24);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .topbar {
+      padding: 22px 28px;
+      background: var(--ink);
+      color: var(--paper-light);
+      font-family: 'Fraunces', serif;
+      font-size: 18px;
+      letter-spacing: 0.06em;
+      text-align: center;
+    }
+
+    main {
+      width: min(100% - 32px, 600px);
+      margin: 56px auto;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      color: var(--ink-soft);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 28px;
+      height: 1px;
+      background: currentColor;
+      content: '';
+    }
+
+    h1, h2 { font-family: 'Fraunces', serif; font-weight: 400; }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(38px, 8vw, 58px);
+      line-height: 1.05;
+    }
+
+    .intro {
+      margin: 18px 0 28px;
+      color: var(--ink-soft);
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    .cafe-label {
+      display: inline-block;
+      margin-bottom: 24px;
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      color: var(--ink-soft);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+    }
+
+    .question-card {
+      padding: 28px;
+      background: var(--paper-light);
+      box-shadow: 0 16px 36px rgba(31, 26, 20, 0.12);
+    }
+
+    .question-number {
+      color: var(--walnut);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    fieldset { min-width: 0; margin: 12px 0 0; padding: 0; border: 0; }
+
+    legend {
+      margin-bottom: 20px;
+      font-family: 'Fraunces', serif;
+      font-size: 27px;
+      line-height: 1.2;
+    }
+
+    .answer-list { display: grid; gap: 10px; }
+
+    .field-label {
+      margin-top: 4px;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+
+    .field-input {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+    }
+
+    .field-input:focus { outline: 2px solid var(--walnut); outline-offset: 2px; }
+
+    .answer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 54px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      cursor: pointer;
+      font-size: 15px;
+      transition: background 0.18s, border-color 0.18s;
+    }
+
+    .answer:hover { border-color: var(--walnut); background: rgba(157, 131, 104, 0.1); }
+    .answer input { width: 18px; height: 18px; margin: 0; accent-color: var(--walnut); }
+
+    button {
+      width: 100%;
+      margin-top: 24px;
+      padding: 16px 20px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--paper-light);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    button:hover { background: transparent; color: var(--ink); }
+    button:focus-visible, .answer:focus-within { outline: 2px solid var(--walnut); outline-offset: 3px; }
+
+    .status { min-height: 1.5em; margin: 14px 0 0; color: var(--ink-soft); font-size: 13px; line-height: 1.5; }
+
+    .review-link {
+      display: block;
+      margin-top: 12px;
+      padding: 15px 20px;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-align: center;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .review-link:hover { background: var(--ink); color: var(--paper-light); }
+
+    @media (max-width: 480px) {
+      main { margin: 36px auto; }
+      .question-card { padding: 22px 18px; }
+      .topbar { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">FRUTOS SECOS</header>
+  <main>
+    <div class="eyebrow">A moment to share</div>
+    <h1>Your feedback<br>means a lot.</h1>
+    <p class="intro">Tell us a little about what you enjoyed. It only takes a moment.</p>
+    <div class="cafe-label" id="cafe-label">Café: loading…</div>
+
+    <form id="feedback-form">
+      <section class="question-card" aria-labelledby="details-title">
+        <div class="question-number">Question 01</div>
+        <fieldset>
+          <legend id="details-title">What should we call you?</legend>
+          <div class="answer-list">
+            <label class="field-label" for="customer-name">Your name</label>
+            <input class="field-input" id="customer-name" name="name" type="text" autocomplete="name" required>
+            <label class="field-label" for="customer-email">Your email</label>
+            <input class="field-input" id="customer-email" name="email" type="email" autocomplete="email" required>
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="question-card" aria-labelledby="question-title" style="margin-top: 18px;">
+        <div class="question-number">Question 02</div>
+        <fieldset>
+          <legend id="question-title">What did you have today?</legend>
+          <div class="answer-list">
+            <label class="answer"><input type="radio" name="item-had" value="cake-and-pastries" required> <span>Cake and pastries</span></label>
+            <label class="answer"><input type="radio" name="item-had" value="biscuits"> <span>Biscuits</span></label>
+            <label class="answer"><input type="radio" name="item-had" value="others"> <span>Others</span></label>
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="question-card" aria-labelledby="experience-title" style="margin-top: 18px;">
+        <div class="question-number">Question 03</div>
+        <fieldset>
+          <legend id="experience-title">How was your experience?</legend>
+          <div class="answer-list">
+            <label class="answer"><input type="radio" name="experience" value="jhakaas" required> <span>Jhakaas</span></label>
+            <label class="answer"><input type="radio" name="experience" value="ok-ok-tha"> <span>Ok ok tha</span></label>
+            <label class="answer"><input type="radio" name="experience" value="mujhe-hurt-hua-bigg-boss"> <span>Mujhe hurt hua, Bigg Boss</span></label>
+          </div>
+        </fieldset>
+        <button type="submit">Continue</button>
+        <p class="status" id="form-status" role="status" aria-live="polite"></p>
+        <a class="review-link" id="review-link" href="#" target="_blank" rel="noopener noreferrer" hidden>Leave a Google review</a>
+      </section>
+    </form>
+  </main>
+
+  <script>
+    const cafeId = new URLSearchParams(window.location.search).get('cafe');
+    const cafeLabel = document.getElementById('cafe-label');
+    const form = document.getElementById('feedback-form');
+    const status = document.getElementById('form-status');
+    const reviewLink = document.getElementById('review-link');
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    // Display the URL value as text only; the backend will validate it before saving feedback.
+    cafeLabel.textContent = cafeId ? `Café ID: ${cafeId}` : 'Café link is missing an ID';
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!cafeId) {
+        status.textContent = 'This café link is missing its ID. Please scan the café QR code again.';
+        return;
+      }
+
+      submitButton.disabled = true;
+      status.textContent = 'Sending your feedback…';
+      reviewLink.hidden = true;
+
+      const answers = Object.fromEntries(new FormData(form).entries());
+      try {
+        const response = await fetch('/api/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ cafeId, ...answers })
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || 'Your feedback could not be saved.');
+
+        status.textContent = 'Thank you! Your feedback was saved. If you’d like, you can also leave a Google review.';
+        reviewLink.href = result.reviewUrl;
+        reviewLink.hidden = false;
+        form.reset();
+      } catch (error) {
+        status.textContent = error.message || 'We could not send your feedback. Please try again.';
+      } finally {
+        submitButton.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
