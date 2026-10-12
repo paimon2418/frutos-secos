@@ -274,10 +274,35 @@
         const result = await response.json();
         if (!response.ok) throw new Error(result.error || 'Your feedback could not be saved.');
 
-        status.textContent = 'Thank you! Your feedback was saved. If you’d like, you can also leave a Google review.';
-        reviewLink.href = result.reviewUrl;
-        reviewLink.hidden = false;
-        form.reset();
+      form.reset();
+
+let reviewUrl = '';
+
+try {
+  const candidate = new URL(result.reviewUrl);
+  const host = candidate.hostname.toLowerCase();
+
+  if (
+    candidate.protocol === 'https:' &&
+    (
+      host === 'google.com' ||
+      host.endsWith('.google.com') ||
+      host === 'maps.app.goo.gl'
+    )
+  ) {
+    reviewUrl = candidate.href;
+  }
+} catch (_) {
+  // Is café ka Google Review link nahi mila.
+}
+
+if (reviewUrl) {
+  status.textContent = 'Thank you! Your feedback was saved. Opening Google Reviews…';
+  window.location.assign(reviewUrl);
+} else {
+  status.textContent =
+    'Thank you! Your feedback was saved, but this café has no valid Google Review link yet.';
+}
       } catch (error) {
         status.textContent = error.message || 'We could not send your feedback. Please try again.';
       } finally {
