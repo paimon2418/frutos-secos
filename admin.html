@@ -10,7 +10,7 @@
   <style>
     :root { color-scheme: light; --paper:#f1ead9; --ink:#1f1a14; --walnut:#4a3524; --line:rgba(31,26,20,.2); --olive:#66704c; --danger:#8d2c20; }
     * { box-sizing:border-box; }
-    body { margin:0; min-height:100vh; background:#9d8368; color:var(--ink); font-family:Inter, sans-serif; padding:32px 16px; }
+    body { margin:0; min-height:100vh; background:#9d8368; color:var(--ink); font-family:Inter,sans-serif; padding:32px 16px; }
     main { max-width:760px; margin:0 auto; }
     header { color:var(--paper); margin:0 0 22px; }
     .brand { font:500 12px 'IBM Plex Mono',monospace; letter-spacing:.15em; }
@@ -23,9 +23,9 @@
     label { display:block; font-size:13px; font-weight:600; margin-bottom:7px; }
     .field { min-width:0; }
     .wide { grid-column:1/-1; }
-    input, textarea { width:100%; border:1px solid #aa9e8d; border-radius:0; background:#fffdf8; color:var(--ink); padding:12px 13px; font:14px Inter,sans-serif; }
+    input,textarea { width:100%; border:1px solid #aa9e8d; border-radius:0; background:#fffdf8; color:var(--ink); padding:12px 13px; font:14px Inter,sans-serif; }
     textarea { min-height:84px; resize:vertical; }
-    input:focus, textarea:focus { outline:2px solid var(--olive); outline-offset:1px; }
+    input:focus,textarea:focus { outline:2px solid var(--olive); outline-offset:1px; }
     .hint { color:#655b4d; font-size:12px; line-height:1.5; margin:6px 0 0; }
     button { border:1px solid var(--ink); background:var(--ink); color:var(--paper); padding:13px 18px; font:500 12px 'IBM Plex Mono',monospace; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; }
     button:disabled { opacity:.55; cursor:wait; }
@@ -107,6 +107,11 @@
             <label for="photo-url">Café photo URL</label>
             <input id="photo-url" name="photoUrl" type="url" maxlength="1000" placeholder="https://…">
             <p class="hint">Paste a link to the café photo. File uploads need a separate image-storage setup.</p>
+          </div>
+          <div class="field wide">
+            <label for="review-url">Google Review link</label>
+            <input id="review-url" name="googleReviewUrl" type="url" maxlength="2000" placeholder="https://…" required>
+            <p class="hint">Paste this café’s Google Maps review link. It opens after a customer submits feedback.</p>
           </div>
         </div>
         <button class="primary" type="submit" id="save-button">Register café</button>
