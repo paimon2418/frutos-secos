@@ -200,45 +200,9 @@
     <div class="cafe-label" id="cafe-label">Café: loading…</div>
 
     <form id="feedback-form">
-      <section class="question-card" aria-labelledby="details-title">
-        <div class="question-number">Question 01</div>
-        <fieldset>
-          <legend id="details-title">What should we call you?</legend>
-          <div class="answer-list">
-            <label class="field-label" for="customer-name">Your name</label>
-            <input class="field-input" id="customer-name" name="name" type="text" autocomplete="name" required>
-            <label class="field-label" for="customer-email">Your email</label>
-            <input class="field-input" id="customer-email" name="email" type="email" autocomplete="email" required>
-          </div>
-        </fieldset>
-      </section>
-
-      <section class="question-card" aria-labelledby="question-title" style="margin-top: 18px;">
-        <div class="question-number">Question 02</div>
-        <fieldset>
-          <legend id="question-title">What did you have today?</legend>
-          <div class="answer-list">
-            <label class="answer"><input type="radio" name="item-had" value="cake-and-pastries" required> <span>Cake and pastries</span></label>
-            <label class="answer"><input type="radio" name="item-had" value="biscuits"> <span>Biscuits</span></label>
-            <label class="answer"><input type="radio" name="item-had" value="others"> <span>Others</span></label>
-          </div>
-        </fieldset>
-      </section>
-
-      <section class="question-card" aria-labelledby="experience-title" style="margin-top: 18px;">
-        <div class="question-number">Question 03</div>
-        <fieldset>
-          <legend id="experience-title">How was your experience?</legend>
-          <div class="answer-list">
-            <label class="answer"><input type="radio" name="experience" value="jhakaas" required> <span>Jhakaas</span></label>
-            <label class="answer"><input type="radio" name="experience" value="ok-ok-tha"> <span>Ok ok tha</span></label>
-            <label class="answer"><input type="radio" name="experience" value="mujhe-hurt-hua-bigg-boss"> <span>Mujhe hurt hua, Bigg Boss</span></label>
-          </div>
-        </fieldset>
-        <button type="submit">Continue</button>
-        <p class="status" id="form-status" role="status" aria-live="polite"></p>
-        <a class="review-link" id="review-link" href="#" target="_blank" rel="noopener noreferrer" hidden>Leave a Google review</a>
-      </section>
+      <div id="questions-container" aria-live="polite"></div>
+      <button type="submit" id="submit-button" disabled>Continue</button>
+      <p class="status" id="form-status" role="status" aria-live="polite"></p>
     </form>
   </main>
 
@@ -247,68 +211,108 @@
     const cafeLabel = document.getElementById('cafe-label');
     const form = document.getElementById('feedback-form');
     const status = document.getElementById('form-status');
-    const reviewLink = document.getElementById('review-link');
-    const submitButton = form.querySelector('button[type="submit"]');
+    const submitButton = document.getElementById('submit-button');
+    const questionsContainer = document.getElementById('questions-container');
+    let questions = [];
 
-    // Display the URL value as text only; the backend will validate it before saving feedback.
-    cafeLabel.textContent = cafeId ? `Café ID: ${cafeId}` : 'Café link is missing an ID';
+    function showQuestionLoadError(message) {
+      status.textContent = message;
+      submitButton.disabled = true;
+    }
 
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
+    async function loadQuestions() {
       if (!cafeId) {
-        status.textContent = 'This café link is missing its ID. Please scan the café QR code again.';
+        cafeLabel.textContent = 'Café link is missing an ID';
+        showQuestionLoadError('Please scan the café QR code again.');
         return;
       }
 
+      try {
+        const response = await fetch(`/api/feedback?cafeId=${encodeURIComponent(cafeId)}`);
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || 'Could not load the feedback questions.');
+
+        cafeLabel.textContent = result.cafeName ? `Café: ${result.cafeName}` : `Café ID: ${cafeId}`;
+        questions = result.questions || [];
+        if (questions.length !== 3) throw new Error('This café’s feedback questions are not configured correctly.');
+
+        questions.forEach((question, index) => {
+          const section = document.createElement('section');
+          section.className = 'question-card';
+          section.style.marginTop = index ? '18px' : '0';
+
+          const number = document.createElement('div');
+          number.className = 'question-number';
+          number.textContent = `Question 0${index + 1}`;
+          section.appendChild(number);
+
+          const fieldset = document.createElement('fieldset');
+          const legend = document.createElement('legend');
+          legend.textContent = question.prompt;
+          fieldset.appendChild(legend);
+
+          const answerList = document.createElement('div');
+          answerList.className = 'answer-list';
+          question.options.forEach((option) => {
+            const label = document.createElement('label');
+            label.className = 'answer';
+            const input = document.createElement('input');
+            input.type = 'radio';
+            input.name = question.id;
+            input.value = option;
+            input.required = true;
+            const span = document.createElement('span');
+            span.textContent = option;
+            label.append(input, span);
+            answerList.appendChild(label);
+          });
+
+          fieldset.appendChild(answerList);
+          section.appendChild(fieldset);
+          questionsContainer.appendChild(section);
+        });
+
+        submitButton.disabled = false;
+        status.textContent = '';
+      } catch (error) {
+        showQuestionLoadError(error.message || 'Could not load this café’s feedback questions.');
+      }
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!cafeId || questions.length !== 3) return;
+
       submitButton.disabled = true;
       status.textContent = 'Sending your feedback…';
-      reviewLink.hidden = true;
 
       const answers = Object.fromEntries(new FormData(form).entries());
       try {
         const response = await fetch('/api/feedback', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ cafeId, ...answers })
+          body: JSON.stringify({ cafeId, answers })
         });
         const result = await response.json();
         if (!response.ok) throw new Error(result.error || 'Your feedback could not be saved.');
 
-      form.reset();
+        form.reset();
+        const candidate = new URL(result.reviewUrl);
+        const host = candidate.hostname.toLowerCase();
+        const isGoogle = candidate.protocol === 'https:' &&
+          (host === 'google.com' || host.endsWith('.google.com') || host === 'maps.app.goo.gl');
 
-let reviewUrl = '';
-
-try {
-  const candidate = new URL(result.reviewUrl);
-  const host = candidate.hostname.toLowerCase();
-
-  if (
-    candidate.protocol === 'https:' &&
-    (
-      host === 'google.com' ||
-      host.endsWith('.google.com') ||
-      host === 'maps.app.goo.gl'
-    )
-  ) {
-    reviewUrl = candidate.href;
-  }
-} catch (_) {
-  // Is café ka Google Review link nahi mila.
-}
-
-if (reviewUrl) {
-  status.textContent = 'Thank you! Your feedback was saved. Opening Google Reviews…';
-  window.location.assign(reviewUrl);
-} else {
-  status.textContent =
-    'Thank you! Your feedback was saved, but this café has no valid Google Review link yet.';
-}
+        if (!isGoogle) throw new Error('Feedback was saved, but this café’s Google Review link is invalid.');
+        status.textContent = 'Thank you! Your feedback was saved. Opening Google Reviews…';
+        window.location.assign(candidate.href);
       } catch (error) {
         status.textContent = error.message || 'We could not send your feedback. Please try again.';
-      } finally {
         submitButton.disabled = false;
       }
     });
+
+    loadQuestions();
   </script>
 </body>
 </html>
+
