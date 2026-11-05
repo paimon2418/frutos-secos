@@ -10,7 +10,7 @@
   <style>
     :root { color-scheme: light; --paper:#f1ead9; --ink:#1f1a14; --walnut:#4a3524; --line:rgba(31,26,20,.2); --olive:#66704c; --danger:#8d2c20; }
     * { box-sizing:border-box; }
-    body { margin:0; min-height:100vh; background:#9d8368; color:var(--ink); font-family:Inter,sans-serif; padding:32px 16px; }
+    body { margin:0; min-height:100vh; background:#9d8368; color:var(--ink); font-family:Inter, sans-serif; padding:32px 16px; }
     main { max-width:760px; margin:0 auto; }
     header { color:var(--paper); margin:0 0 22px; }
     .brand { font:500 12px 'IBM Plex Mono',monospace; letter-spacing:.15em; }
@@ -23,9 +23,9 @@
     label { display:block; font-size:13px; font-weight:600; margin-bottom:7px; }
     .field { min-width:0; }
     .wide { grid-column:1/-1; }
-    input,textarea { width:100%; border:1px solid #aa9e8d; border-radius:0; background:#fffdf8; color:var(--ink); padding:12px 13px; font:14px Inter,sans-serif; }
+    input, textarea { width:100%; border:1px solid #aa9e8d; border-radius:0; background:#fffdf8; color:var(--ink); padding:12px 13px; font:14px Inter,sans-serif; }
     textarea { min-height:84px; resize:vertical; }
-    input:focus,textarea:focus { outline:2px solid var(--olive); outline-offset:1px; }
+    input:focus, textarea:focus { outline:2px solid var(--olive); outline-offset:1px; }
     .hint { color:#655b4d; font-size:12px; line-height:1.5; margin:6px 0 0; }
     button { border:1px solid var(--ink); background:var(--ink); color:var(--paper); padding:13px 18px; font:500 12px 'IBM Plex Mono',monospace; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; }
     button:disabled { opacity:.55; cursor:wait; }
@@ -113,6 +113,34 @@
             <input id="review-url" name="googleReviewUrl" type="url" maxlength="2000" placeholder="https://…" required>
             <p class="hint">Paste this café’s Google Maps review link. It opens after a customer submits feedback.</p>
           </div>
+          <div class="field wide">
+            <h3>Feedback questions for this café</h3>
+            <p class="hint">Set three questions and give each 2–5 choices separated by commas. Customers answer anonymously.</p>
+          </div>
+          <div class="field wide">
+            <label for="question-1">Question 1</label>
+            <input id="question-1" name="question1" maxlength="180" placeholder="e.g. How did you like the taste?" required>
+          </div>
+          <div class="field wide">
+            <label for="options-1">Answer choices for Question 1 (comma separated)</label>
+            <input id="options-1" name="options1" maxlength="300" placeholder="Loved it, It was okay, Could be better" required>
+          </div>
+          <div class="field wide">
+            <label for="question-2">Question 2</label>
+            <input id="question-2" name="question2" maxlength="180" placeholder="e.g. Was the portion size right?" required>
+          </div>
+          <div class="field wide">
+            <label for="options-2">Answer choices for Question 2 (comma separated)</label>
+            <input id="options-2" name="options2" maxlength="300" placeholder="Just right, Too small, Too large" required>
+          </div>
+          <div class="field wide">
+            <label for="question-3">Question 3</label>
+            <input id="question-3" name="question3" maxlength="180" placeholder="e.g. Would you order it again?" required>
+          </div>
+          <div class="field wide">
+            <label for="options-3">Answer choices for Question 3 (comma separated)</label>
+            <input id="options-3" name="options3" maxlength="300" placeholder="Definitely, Maybe, No" required>
+          </div>
         </div>
         <button class="primary" type="submit" id="save-button">Register café</button>
       </form>
@@ -194,7 +222,18 @@
       saveButton.disabled = true;
       const form = new FormData(event.currentTarget);
       const payload = Object.fromEntries(form.entries());
+      payload.feedbackQuestions = [1, 2, 3].map((number) => ({
+        prompt: payload[`question${number}`].trim(),
+        options: [...new Set(payload[`options${number}`].split(',').map((option) => option.trim()).filter(Boolean))]
+      }));
+      [1, 2, 3].forEach((number) => {
+        delete payload[`question${number}`];
+        delete payload[`options${number}`];
+      });
       try {
+        if (payload.feedbackQuestions.some((question) => question.options.length < 2 || question.options.length > 5)) {
+          throw new Error('Each feedback question needs 2 to 5 different answer choices, separated by commas.');
+        }
         const data = await api('/api/cafes', { method: 'POST', body: JSON.stringify(payload) });
         document.getElementById('result-id').textContent = data.cafe.cafeId;
         const link = document.getElementById('result-link');
@@ -234,3 +273,4 @@
   </script>
 </body>
 </html>
+
