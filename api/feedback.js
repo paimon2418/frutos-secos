@@ -76,8 +76,16 @@ export default async function handler(request, response) {
     return response.status(405).json({ error: 'Use GET to load or POST to submit feedback.' });
   }
 
-  const { cafeId, answers } = request.body || {};
+  const { cafeId, name, contact, whatHad, answers } = request.body || {};
   if (!validCafeId(cafeId)) return response.status(400).json({ error: 'A valid café ID is required.' });
+  const cleanName = typeof name === 'string' ? name.trim() : '';
+  const cleanContact = typeof contact === 'string' ? contact.trim() : '';
+  const cleanWhatHad = typeof whatHad === 'string' ? whatHad.trim() : '';
+  const isEmail = cleanContact.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanContact);
+  const isPhone = /^\+?[0-9\s()-]{8,20}$/.test(cleanContact);
+  if (!cleanName || cleanName.length > 120) return response.status(400).json({ error: 'Please enter your name.' });
+  if (!isEmail && !isPhone) return response.status(400).json({ error: 'Enter a valid phone number or email address.' });
+  if (!cleanWhatHad || cleanWhatHad.length > 120) return response.status(400).json({ error: 'Please tell us what you had.' });
   if (!answers || typeof answers !== 'object' || Array.isArray(answers)) {
     return response.status(400).json({ error: 'Please answer all feedback questions.' });
   }
@@ -108,6 +116,10 @@ export default async function handler(request, response) {
     await db.collection('feedback').insertOne({
       cafeId,
       cafeName: cafe.cafeName || null,
+      name: cleanName,
+      contact: isEmail ? cleanContact.toLowerCase() : cleanContact,
+      contactType: isEmail ? 'email' : 'phone',
+      whatHad: cleanWhatHad,
       answers: cleanAnswers,
       submittedAt: new Date()
     });
