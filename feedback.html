@@ -200,6 +200,20 @@
     <div class="cafe-label" id="cafe-label">Café: loading…</div>
 
     <form id="feedback-form">
+      <section class="question-card" aria-labelledby="customer-details-title" style="margin-bottom: 18px;">
+        <div class="question-number">Your visit</div>
+        <fieldset>
+          <legend id="customer-details-title">A few details</legend>
+          <div class="answer-list">
+            <label class="field-label" for="customer-name">Name</label>
+            <input class="field-input" id="customer-name" name="name" type="text" maxlength="120" autocomplete="name" required>
+            <label class="field-label" for="customer-contact">Phone number or email</label>
+            <input class="field-input" id="customer-contact" name="contact" type="text" maxlength="254" autocomplete="off" placeholder="Enter your phone number or email" required>
+            <label class="field-label" for="what-had">What did you have?</label>
+            <input class="field-input" id="what-had" name="whatHad" type="text" maxlength="120" placeholder="e.g. Almond croissant" required>
+          </div>
+        </fieldset>
+      </section>
       <div id="questions-container" aria-live="polite"></div>
       <button type="submit" id="submit-button" disabled>Continue</button>
       <p class="status" id="form-status" role="status" aria-live="polite"></p>
@@ -286,12 +300,19 @@
       submitButton.disabled = true;
       status.textContent = 'Sending your feedback…';
 
-      const answers = Object.fromEntries(new FormData(form).entries());
+      const formData = new FormData(form);
+      const answers = Object.fromEntries(questions.map((question) => [question.id, formData.get(question.id)]));
       try {
         const response = await fetch('/api/feedback', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ cafeId, answers })
+          body: JSON.stringify({
+            cafeId,
+            name: formData.get('name'),
+            contact: formData.get('contact'),
+            whatHad: formData.get('whatHad'),
+            answers
+          })
         });
         const result = await response.json();
         if (!response.ok) throw new Error(result.error || 'Your feedback could not be saved.');
