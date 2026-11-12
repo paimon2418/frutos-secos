@@ -34,16 +34,16 @@ Use a password manager to generate a unique database password with at least 32 r
 
 ## Atlas network access and Vercel Hobby
 
-Do not add or document `0.0.0.0/0`. It allows connection attempts from every IPv4 address.
+Do not add a wildcard network rule that permits every IPv4 address to reach Atlas.
 
 Vercel Hobby functions use outbound IP addresses that can change. That means a direct Atlas connection cannot be reliably restricted to a small, stable Vercel IP allowlist on Hobby. Vercel Static IPs are available on Pro and Enterprise plans.
 
 The safest choices are:
 
 1. Keep Atlas restricted to exact IP addresses and use a hosting/network option with a stable outbound IP, or a Vercel plan with Static IPs. Add only the exact provider IPs to Atlas.
-2. If you must stay on Hobby and connect directly to Atlas, allowing `0.0.0.0/0` may be needed for connectivity. This is a security tradeoff, not a safe allowlist. Reduce the impact with the dedicated least-privilege database user above, a unique 32+ character database password, and server-side-only secrets. Do not use this as a long-term secure setup.
+2. If you must stay on Hobby and connect directly to Atlas, a wildcard all-IPv4 rule may be needed for connectivity. This is a security tradeoff, not a safe allowlist. Reduce the impact with the dedicated least-privilege database user above, a unique 32+ character database password, and server-side-only secrets. Do not use this as a long-term secure setup.
 
-To inspect Atlas access entries: sign in to MongoDB Atlas → select the project → **Security** → **Network Access** → **IP Access List**. Remove any `0.0.0.0/0` entry when the app has been moved to a host with stable egress. Do not remove the exact current-user IP entry if you still need to connect to Atlas from your computer.
+To inspect Atlas access entries: sign in to MongoDB Atlas → select the project → **Security** → **Network Access** → **IP Access List**. Remove any wildcard all-IPv4 entry when the app has been moved to a host with stable egress. Do not remove the exact current-user IP entry if you still need to connect to Atlas from your computer.
 
 ## Registering a café
 
